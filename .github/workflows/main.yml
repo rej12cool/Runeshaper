@@ -1,6 +1,8 @@
 name: Build Project
 
 on:
+  schedule:
+    - cron: '0 20 * * 1'
   pull_request: {}
   push: { branches: [master] }
 
