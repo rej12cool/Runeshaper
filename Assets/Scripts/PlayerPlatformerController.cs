@@ -20,31 +20,32 @@ public class PlayerPlatformerController : PhysicsObject
 
     protected override void ComputeVelocity()
     {
-        Vector2 move = Vector2.zero;
+        // Get input
+        Vector2 input = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
 
-        move.x = Input.GetAxis("Horizontal");
-
-        if (Input.GetButtonDown("Jump") && grounded)
+        // Check if the jump command was given
+        if (Input.GetButtonDown("Jump"))
         {
-            velocity.y = jumpTakeOffSpeed;
-        }
-        else if (Input.GetButtonUp("Jump"))
-        {
-            if (velocity.y > 0)
+            // If the player is grounded, add the jump velocity
+            if (grounded)
+            {
+                velocity.y = jumpTakeOffSpeed;
+            }
+            // Otherwise, half the velocity?
+            else if (velocity.y > 0)
             {
                 velocity.y = velocity.y * 0.5f;
             }
         }
 
-        bool flipSprite = (spriteRenderer.flipX ? (move.x > 0.01f) : (move.x < 0.01f));
-        if (flipSprite)
+        // Flip the sprite if moving left vs. right
+        if (input.x != 0)
         {
-            spriteRenderer.flipX = !spriteRenderer.flipX;
+            spriteRenderer.flipX = input.x == 1;
         }
 
         //animator.SetBool("grounded", grounded);
         //animator.SetFloat("velocityX", Mathf.Abs(velocity.x) / maxSpeed);
-
-        targetVelocity = move * maxSpeed;
+        targetVelocity = input * maxSpeed;
     }
 }
