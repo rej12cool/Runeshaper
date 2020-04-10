@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class Rune : MonoBehaviour
 {
+    // Reference to the script with a queue of all runes
+    public GlobalRunes all_runes;
+
     // All rune element types
     public enum RuneType
     {
@@ -46,11 +49,13 @@ public class Rune : MonoBehaviour
     // Set up the rune for its current config
     void Start()
     {
+        all_runes = transform.parent.GetComponent<GlobalRunes>();
+
         crossingRune = null;
 
         float temp = rot;
         rot = 0;
-        GlobalRunes.AddQueue(this.gameObject, "rotate", temp, new Vector2(0, 0));
+        all_runes.AddQueue(this.gameObject, "rotate", temp, new Vector2(0, 0));
 
         SetRuneType(type);
     }
@@ -239,7 +244,7 @@ public class Rune : MonoBehaviour
         }
 
         // Make the other rune stop at the intersection point
-        GlobalRunes.AddQueue(other, "adjust_length", 0f, point);
+        all_runes.AddQueue(other, "adjust_length", 0f, point);
 
         // Set crossing to the other rune
         crossingRune = other;
