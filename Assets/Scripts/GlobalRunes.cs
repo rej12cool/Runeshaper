@@ -7,10 +7,10 @@ using UnityEngine;
 public class GlobalRunes : MonoBehaviour
 {
     // The queue of all updates to runes to be completed
-    static Queue<RuneUpdate> updateQ = null;
+    private Queue<RuneUpdate> updateQ = null;
 
     // Determines if currently processing a rune update or not
-    static bool updating = false;
+    private bool updating = false;
 
     // Struct for storing info about an update
     private struct RuneUpdate
@@ -21,8 +21,8 @@ public class GlobalRunes : MonoBehaviour
         public Vector2 point;
     }
 
-    // Start is called before the first frame update
-    void Start()
+    // Awake is called before Start
+    void Awake()
     {
         updateQ = new Queue<RuneUpdate>();
     }
@@ -46,17 +46,15 @@ public class GlobalRunes : MonoBehaviour
         }
     }
 
-    public static void Test()
+    public void Test()
     {
         Debug.Log("Test successful!");
     }
 
 
     // AddQueue adds a rune and the desired update to the queue
-    public static void AddQueue(GameObject rune, string mode, float rot, Vector2 point)
+    public void AddQueue(GameObject rune, string mode, float rot, Vector2 point)
     {
-        Debug.Log(mode);
-
         // Create the struct
         RuneUpdate u;
         u.rune = rune;
@@ -66,9 +64,7 @@ public class GlobalRunes : MonoBehaviour
 
         // Enqueue the update
         updateQ.Enqueue(u);
-        
 
         return;
     }
 }
-

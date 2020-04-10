@@ -31,11 +31,13 @@ public class PlayerPlatformerController : PhysicsObject
             {
                 velocity.y = jumpTakeOffSpeed;
             }
+            /* NIKI EDIT: "I'm trying with this commented out"
             // Otherwise, half the velocity?
             else if (velocity.y > 0)
             {
                 velocity.y = velocity.y * 0.5f;
             }
+            */
         }
 
         // Flip the sprite if moving left vs. right
