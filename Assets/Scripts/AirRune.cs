@@ -29,12 +29,9 @@ public class AirRune : MonoBehaviour
     		{
     			GameObject g = (GameObject)i.Current;
 
-    			// Calculate distance from entity to base
-        		float dist = Vector2.Distance(rune.GetPosition(), g.transform.position);
-        		// Scale force by that distance
-        		float thrust = force;
+        	float thrust = force;
 
-           		g.GetComponent<Rigidbody2D>().AddForce(v * thrust);
+          g.GetComponent<Rigidbody2D>().AddForce(v * thrust);
     		}
     	}
     }
