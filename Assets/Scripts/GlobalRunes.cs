@@ -21,20 +21,15 @@ public class GlobalRunes : MonoBehaviour
         public Vector2 point;
     }
 
-    // Start is called before the first frame update
-    void Start()
+    // Awake is called before Start
+    void Awake()
     {
-       
+        updateQ = new Queue<RuneUpdate>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (updateQ == null)
-        {
-            updateQ = new Queue<RuneUpdate>();
-        }
-
         if ((!updating) && (updateQ.Count > 0))
         {
             updating = true;
@@ -60,11 +55,6 @@ public class GlobalRunes : MonoBehaviour
     // AddQueue adds a rune and the desired update to the queue
     public void AddQueue(GameObject rune, string mode, float rot, Vector2 point)
     {
-        if (updateQ == null)
-        {
-            updateQ = new Queue<RuneUpdate>();
-        }
-
         // Create the struct
         RuneUpdate u;
         u.rune = rune;
@@ -74,8 +64,7 @@ public class GlobalRunes : MonoBehaviour
 
         // Enqueue the update
         updateQ.Enqueue(u);
-        
+
         return;
     }
 }
-
