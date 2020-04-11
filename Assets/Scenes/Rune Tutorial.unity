@@ -378,7 +378,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1006415602815208089, guid: 4bcefb4a12ba7434b9e578d19c247224, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 4bcefb4a12ba7434b9e578d19c247224, type: 3}
 --- !u!1 &411531365
 GameObject:
@@ -411,7 +412,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6380bc41568e95b4d922e21b4e58c74f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  all_runes: {fileID: 0}
+  allRunes: {fileID: 0}
   rot: 0
   max_reach: 6
   scale: 0.5
