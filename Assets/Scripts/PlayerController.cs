@@ -5,7 +5,7 @@ using Vector3 = UnityEngine.Vector3;
 [RequireComponent(typeof(Controller2D))]
 public class PlayerController : MonoBehaviour
 {
-    public Vector3 velocity;
+    public Vector2 velocity;
 
     private Vector2 directionalInput; // Reference to the input
 
