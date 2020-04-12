@@ -9,7 +9,7 @@ public class PlayerController : MonoBehaviour
 
     private Vector2 directionalInput; // Reference to the input
 
-    private float jumpHeight = 1.2f; // How high the jump is at it's maximum
+    private float jumpHeight = 1.3f; // How high the jump is at it's maximum
     private float timeToJumpApex = .3f; // How long it takes to get to the apex of the jump
     private float moveSpeed = 6; // X velocity
     private float fallMultiplier = 1.4f; // How fast the player falls relative to rising (for better jump)
@@ -50,13 +50,10 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    void Update()
+    void FixedUpdate()
     {
         // First calculate the velocity with no other issues
         CalculateVelocity();
-
-        // Handle climbing afterwards, so it can just override the y velocity if necessary
-        HandleClimbing();
 
         // Move the player
         controller.Move(velocity * Time.deltaTime);
@@ -66,11 +63,6 @@ public class PlayerController : MonoBehaviour
         {
             velocity.y = 0;
         }
-    }
-
-    private void HandleClimbing()
-    {
-        // TODO: Implement later
     }
 
     // Helper method to calculate the velocity

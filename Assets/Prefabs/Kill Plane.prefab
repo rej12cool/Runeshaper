@@ -11,8 +11,9 @@ GameObject:
   - component: {fileID: 4468068621866346035}
   - component: {fileID: 4468068621866346032}
   - component: {fileID: 4468068621866346033}
+  - component: {fileID: 4842654347655911297}
   m_Layer: 0
-  m_Name: OutOfBounds
+  m_Name: Kill Plane
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -26,8 +27,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4468068621866346046}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.22, y: -7.48, z: -2.5590675}
-  m_LocalScale: {x: 34.347218, y: 4.0231, z: 4.0231}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 100, y: 2, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -70,4 +71,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d4a64fd5311f940eba4135d992fe41ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  respawn_position: {x: -6.5, y: -3}
+  respawn: {fileID: 0}
+--- !u!50 &4842654347655911297
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4468068621866346046}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 7

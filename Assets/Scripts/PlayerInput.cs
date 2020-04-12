@@ -6,11 +6,13 @@ using UnityEngine;
 public class PlayerInput : MonoBehaviour
 {
     private PlayerController player;
+    private Vector2 respawnPosition;
 
     void Start()
     {
         // Get reference to the PlayerController script
         player = GetComponent<PlayerController>();
+        respawnPosition = GameObject.FindWithTag("Respawn").transform.position;
     }
 
     void Update()
@@ -28,6 +30,11 @@ public class PlayerInput : MonoBehaviour
         if (Input.GetKey("escape"))
         {
             Application.Quit();
+        }
+
+        if (Input.GetKey("r"))
+        {
+            player.transform.position = respawnPosition;
         }
     }
 }

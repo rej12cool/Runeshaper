@@ -7,8 +7,9 @@ public class Controller2D : RaycastController
     public CollisionInfo collisions; // Reference to the collision information from the collider
     public Vector2 playerInput; // Vector representing the input for the player - used for the camera
 
-    private float maxClimbAngle = 80; // Max angle the object can climb
-    private float maxDescendAngle = 75; // Max angle the object can descend without falling off
+    private const float MaxClimbAngle = 80; // Max angle the object can climb
+    private const float MaxDescendAngle = 75; // Max angle the object can descend without falling off
+    private const float HoistSpeed = .05f;
 
     public void Move(Vector2 moveAmount, bool standingOnPlatform = false)
     {
@@ -56,7 +57,14 @@ public class Controller2D : RaycastController
             // Get info about the hit
             RaycastHit2D hit = Physics2D.Raycast(rayOrigin, Vector2.right * directionX, rayLength, collisionMask);
             // Draw a line in the direction of movement to check for collisions
-            Debug.DrawRay(rayOrigin, Vector2.right * directionX, Color.red);
+            if (i != horizontalRayCount - 1)
+            {
+                Debug.DrawRay(rayOrigin, Vector2.right * directionX * rayLength, Color.red);
+            }
+            else
+            {
+                Debug.DrawRay(rayOrigin, Vector2.right * directionX * rayLength, Color.green);
+            }
 
             if (hit)
             {
@@ -70,46 +78,55 @@ public class Controller2D : RaycastController
                 float slopeAngle = Vector2.Angle(hit.normal, Vector2.up);
 
                 // If it is the bottom ray checking and the slope angle of the incline is less than the maximum
-                if (i == 0 && slopeAngle <= maxClimbAngle)
+                if (i == 0)
                 {
-                    // If previously descending
-                    if (collisions.descendingSlope)
+                    // Check for climbing
+                    if (slopeAngle <= MaxClimbAngle)
                     {
-                        // No longer descending
-                        collisions.descendingSlope = false;
-                        moveAmount = collisions.oldMoveAmount;
-                    }
+                        // If previously descending
+                        if (collisions.descendingSlope)
+                        {
+                            // No longer descending
+                            collisions.descendingSlope = false;
+                            moveAmount = collisions.oldMoveAmount;
+                        }
 
-                    // Get the distance to the start of the slope
-                    float distanceToSlopeStart = 0;
-                    // If the slope angle changes, we are climbing a new slope
-                    if (slopeAngle != collisions.slopeAngleOld)
-                    {
-                        // Add the small distance to the start of the slope to avoid a gap before the slope
-                        distanceToSlopeStart = hit.distance - SkinWidth;
-                        moveAmount.x -= distanceToSlopeStart * directionX;
-                    }
+                        // Get the distance to the start of the slope
+                        float distanceToSlopeStart = 0;
+                        // If the slope angle changes, we are climbing a new slope
+                        if (slopeAngle != collisions.slopeAngleOld)
+                        {
+                            // Add the small distance to the start of the slope to avoid a gap before the slope
+                            distanceToSlopeStart = hit.distance - SkinWidth;
+                            moveAmount.x -= distanceToSlopeStart * directionX;
+                        }
 
-                    // Actually do the moving
-                    ClimbSlope(ref moveAmount, slopeAngle);
-                    moveAmount.x += distanceToSlopeStart * directionX;
+                        // Actually do the moving
+                        ClimbSlope(ref moveAmount, slopeAngle);
+                        moveAmount.x += distanceToSlopeStart * directionX;
+                    }
                 }
 
                 // Only check the other rays if we are not climbing the slope
-                if (!collisions.climbingSlope || slopeAngle > maxClimbAngle)
+                if (!collisions.climbingSlope || slopeAngle > MaxClimbAngle)
                 {
                     // Move up to where the collision occurs (if moving left/right would cause a clip into the object)
                     moveAmount.x = (hit.distance - SkinWidth) * directionX;
 
-                    // If climbing a slope, the y velocity accounts for collisions on the side
-                    if (collisions.climbingSlope)
-                    {
-                        moveAmount.y = Mathf.Tan(collisions.slopeAngle * Mathf.Deg2Rad) * Mathf.Abs(moveAmount.x);
-                    }
-
                     // Make the collisions detected based on direction of movement
                     collisions.left = directionX == -1;
                     collisions.right = directionX == 1;
+                }
+            }
+            else
+            {
+                // If the top ray had nothing to hit and the rest of it is blocked
+                if (i == horizontalRayCount - 1 && (collisions.left && directionX == -1 || collisions.right && directionX == 1))
+                {
+                    if (collisions.below || Mathf.Sign(moveAmount.y) == -1)
+                    {
+                        moveAmount.y = HoistSpeed;
+                    }
                 }
             }
         }
@@ -201,7 +218,7 @@ public class Controller2D : RaycastController
         {
             float slopeAngle = Vector2.Angle(hit.normal, Vector2.up);
             // Allow descent if between 0 and the maximum descent angle
-            if (slopeAngle != 0 && slopeAngle <= maxDescendAngle)
+            if (slopeAngle != 0 && slopeAngle <= MaxDescendAngle)
             {
                 // If moving in the same direction as the normal of the slope
                 if (Mathf.Sign(hit.normal.x) == directionX)
@@ -230,7 +247,9 @@ public class Controller2D : RaycastController
     public struct CollisionInfo
     {
         public Vector2 oldMoveAmount;
+
         public float slopeAngle, slopeAngleOld;
+
         // If any of these 4 bools are true, then there is an object in the direction of the variable name
         public bool above, below;
         public bool left, right;

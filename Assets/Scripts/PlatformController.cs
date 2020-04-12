@@ -34,7 +34,7 @@ public class PlatformController : RaycastController
         }
     }
 
-    void Update()
+    void FixedUpdate()
     {
         // Recalculate the origin of each ray because the platform is moving
         UpdateRayCastOrigins();

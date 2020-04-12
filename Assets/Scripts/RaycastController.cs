@@ -9,7 +9,7 @@ public class RaycastController : MonoBehaviour
     public RaycastOrigins raycastOrigins;
 
     protected const float SkinWidth = .015f; // Define inset distance into the bounds to start with raycasting
-    protected const float DistanceBetweenRays = .25f; // Set distance between adjacent rays
+    protected const float DistanceBetweenRays = .15f; // Set distance between adjacent rays
 
     protected BoxCollider2D boxCollider; // Reference to Game Object's boxCollider
     protected float horizontalRaySpacing, verticalRaySpacing; // Calculated spacing between rays

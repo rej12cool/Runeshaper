@@ -10,41 +10,42 @@ public class AirRune : MonoBehaviour
 
     void Start()
     {
-    	inside = new ArrayList();
+        inside = new ArrayList();
     }
 
     void Update()
     {
-    	if (inside.Count > 0)
-    	{
-			// Get rune component
-        	var rune = transform.parent.GetComponent<Rune>();
+        if (inside.Count > 0)
+        {
+            // Get rune component
+            Rune rune = transform.parent.GetComponent<Rune>();
 
-        	// Get direction vector of the rune
-        	Vector2 v = rune.GetVector();
+            // Get direction vector of the rune
+            Vector2 v = rune.GetVector();
 
-        	// Loop through all entities that have entered the effect area
-    		IEnumerator i = inside.GetEnumerator();
-    		while (i.MoveNext())
-    		{
-    			GameObject g = (GameObject)i.Current;
+            // Loop through all entities that have entered the effect area
+            IEnumerator i = inside.GetEnumerator();
+            while (i.MoveNext())
+            {
+                GameObject g = (GameObject) i.Current;
 
-        	float thrust = force;
+                float thrust = force;
 
-          g.GetComponent<Rigidbody2D>().AddForce(v * thrust);
-    		}
-    	}
+                g.GetComponent<Rigidbody2D>().AddForce(v * thrust);
+            }
+        }
     }
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject.tag == "Player") {
-        	inside.Add(other.gameObject);
+        if (other.gameObject.tag == "Player")
+        {
+            inside.Add(other.gameObject);
         }
     }
 
     void OnTriggerExit2D(Collider2D other)
     {
-    	inside.Remove(other.gameObject);
+        inside.Remove(other.gameObject);
     }
 }
