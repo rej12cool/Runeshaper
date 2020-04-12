@@ -1,50 +1,47 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class AirRune : MonoBehaviour
 {
-    public float force = 20;
+    private const float Force = 20f;
 
-    public ArrayList inside;
+    private Rune rune;
+    private ArrayList inside;
 
     void Start()
     {
-    	inside = new ArrayList();
+        rune = transform.parent.GetComponent<Rune>();
+        inside = new ArrayList();
     }
 
-    void Update()
+    void FixedUpdate()
     {
-    	if (inside.Count > 0)
-    	{
-			// Get rune component
-        	var rune = transform.parent.GetComponent<Rune>();
+        if (inside.Count > 0)
+        {
+            // Loop through all entities that have entered the effect area
+            foreach (PlayerController player in inside)
+            {
+                // Apply the upward "force" to the y velocity to have the appearance of it applying the force
+                float distance = Vector2.Distance(player.transform.position, rune.GetPosition());
 
-        	// Get direction vector of the rune
-        	Vector2 v = rune.GetVector();
-
-        	// Loop through all entities that have entered the effect area
-    		IEnumerator i = inside.GetEnumerator();
-    		while (i.MoveNext())
-    		{
-    			GameObject g = (GameObject)i.Current;
-
-        	float thrust = force;
-
-          g.GetComponent<Rigidbody2D>().AddForce(v * thrust);
-    		}
-    	}
+                // TODO: Make this not vertical only
+                player.velocity.y = Force / (Mathf.Pow(distance, .6f));
+            }
+        }
     }
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject.tag == "Player") {
-        	inside.Add(other.gameObject);
+        if (other.gameObject.tag == "Player")
+        {
+            inside.Add(other.gameObject.GetComponent<PlayerController>());
         }
     }
 
     void OnTriggerExit2D(Collider2D other)
     {
-    	inside.Remove(other.gameObject);
+        inside.Remove(other.gameObject.GetComponent<PlayerController>());
     }
 }
