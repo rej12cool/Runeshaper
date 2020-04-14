@@ -30,6 +30,7 @@ public class CameraFollow : MonoBehaviour
     {
         // Update the focus area based on the target's new position/bounds
         focusArea.Update(target.GetComponent<BoxCollider2D>().bounds);
+
         // The focus position is the center of the area plus a vertical offset
         Vector2 focusPosition = focusArea.center + Vector2.up * verticalOffset;
 

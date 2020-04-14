@@ -18,7 +18,7 @@ public class Rune : MonoBehaviour
     }
 
     // The direction of the rune (0 is straight up)
-    public float rot = 0;
+    public float rot;
     // The furthest distance that the rune effect can reach
     public float max_reach = 5;
     // The scale of the rune, to be used for adjusting the size of runes
@@ -44,6 +44,7 @@ public class Rune : MonoBehaviour
     public GameObject hybridRune;
 
     public float test_rot;
+    public int test_count;
 
 
     // Set up the rune for its current config
@@ -63,13 +64,11 @@ public class Rune : MonoBehaviour
     // Frame update function
     void Update()
     {
-        // Uncomment the lines below to demo the adaptive effect area
-        /*
-        if (test_rot != 0)
+        if ((test_rot != 0) && (test_count > 0))
         {
-            Rotate(test_rot);
+            allRunes.AddQueue(this.gameObject, "rotate", test_rot, new Vector2(0, 0));
+            test_count--;
         }
-        */
     }
 
 
@@ -110,6 +109,13 @@ public class Rune : MonoBehaviour
     }
 
 
+    /** GET ROTATION **/
+    // Returns the rotation of the rune in degrees (a float)
+    public float GetRotation()
+    {
+        return rot;
+    }
+
     /** ROTATE **/
     // Rotates the rune on the z-axis by a change in degrees d
     public void Rotate(float d)
@@ -119,19 +125,34 @@ public class Rune : MonoBehaviour
         GameObject other_rune = null;
         Vector2 point = new Vector2(0, 0);
 
-        // If this rune is already crossing another rune, activate that rune's wall collider
-        // so can determine if rotating breaks the cross or not
+        /**** rotate the whole rune ****/
+        rot += d;
+        if (rot > 360)
+        {
+            rot = rot - 360;
+        }
+        if (rot < -360)
+        {
+            rot = rot + 360;
+        }
+        transform.rotation = Quaternion.Euler(0f, 0f, rot);
+
+
+        // If this rune is already crossing another rune, temporarily activate that rune's
+        // wall collider so can determine if rotating breaks the cross or not
         if (crossingRune != null)
         {
             crossingRune.GetComponent<Rune>().wallLine.GetComponent<BoxCollider2D>().enabled = true;
         }
+        // If this rune is crossing AND is making a hybrid rune, temporarily deactivate the
+        // hybrid rune's crossing colliders so there isn't a conflict
+        if ((crossingRune != null) && (hybridRune != null))
+        {
+            hybridRune.GetComponent<Rune>().crossLine.GetComponent<BoxCollider2D>().enabled = false;
+            hybridRune.GetComponent<Rune>().wallLine.GetComponent<BoxCollider2D>().enabled = false;
+        }
 
-        /**** rotate the whole rune ****/
-        rot += d;
-        transform.rotation = Quaternion.Euler(0f, 0f, d);
-
-
-        /**** calculate the furthest the rune can reach in the environment (max distance of max_reach) ****/
+        /**** Calculate the furthest the rune can reach in the environment (max distance of max_reach) ****/
         float reach = max_reach;
         float wall_reach = max_reach;
 
@@ -168,23 +189,59 @@ public class Rune : MonoBehaviour
             reach = wall_reach;
         }
 
+        /** One last calculation for reach: **/
+        // If this rune is crossing another and they are nearly pointing straight at
+        // each other, use an alternative calculation for the intersecting point
+        // (to avoid glitchiness caused by raycasting at that point)
+        if (other_rune != null)
+        {
+            float angle1 = rot;
+            float angle2 = other_rune.GetComponent<Rune>().rot;
+            if (angle1 < 0)
+            {
+                angle1 = angle1 + 360;
+            }
+            if (angle2 < 0)
+            {
+                angle2 = angle2 + 360;
+            }
+            // Check for near parallelism
+            if (Mathf.Abs((angle1 - angle2) - 180) < 4)
+            {
+                Debug.Log("Nearly parallel " + rot + " " + other_rune.GetComponent<Rune>().rot);
+                // Set intersection to midpoint between the two
+                point.x = transform.position.x + ((other_rune.transform.position.x - transform.position.x) / 2);
+                point.y = transform.position.y + ((other_rune.transform.position.y - transform.position.y) / 2);
+                // Set reach to distance to midpoint
+                reach = Vector2.Distance(transform.position, point);
+            }
+        }
+
+
+        /***********/
+
         // Disable the collider for wallCollide of crossing rune (if exists) since we're done with it
         if (crossingRune != null)
         {
             crossingRune.GetComponent<Rune>().wallLine.GetComponent<BoxCollider2D>().enabled = false;
+        }
+        // Re-enable the colliders of the hybrid rune (if exists)
+        if (hybridRune != null)
+        {
+            hybridRune.GetComponent<Rune>().crossLine.GetComponent<BoxCollider2D>().enabled = true;
         }
 
 
         /**** adjust the effect area and cross line to the reach by scaling and moving the box ****/
         // Scale effect area and rune cross line by true reach
         effectArea.transform.localScale = new Vector3(1f, reach / scale, 1f);
-        crossLine.transform.localScale = new Vector3(0.1f, reach / scale, 0.1f);
+        crossLine.transform.localScale = new Vector3(0.01f, reach / scale, 0.01f);
         float y = ((reach - (1f * scale)) / 2f) / scale;
         effectArea.transform.localPosition = new Vector3(0f, y, 0f);
         crossLine.transform.localPosition = new Vector3(0f, y, 0f);
 
         // Scale wall reach line by wall_reach, then disable its collider
-        wallLine.transform.localScale = new Vector3(0.1f, wall_reach / scale, 0.1f);
+        wallLine.transform.localScale = new Vector3(0.01f, wall_reach / scale, 0.01f);
         y = ((wall_reach - (1f * scale)) / 2f) / scale;
         wallLine.transform.localPosition = new Vector3(0f, y, 0f);
         wallLine.GetComponent<BoxCollider2D>().enabled = false;
@@ -199,13 +256,17 @@ public class Rune : MonoBehaviour
         // removing the cross and recalcing the rotation, and remove the hybrid rune
         else if (crossingRune != null)
         {
-            //crossingRune.GetComponent<Rune>().hybridRune = null;
-            //crossingRune.GetComponent<Rune>().crossingRune = null;
-            crossingRune.GetComponent<Rune>().Rotate(0);
+            crossingRune.GetComponent<Rune>().hybridRune = null;
+            crossingRune.GetComponent<Rune>().crossingRune = null;
+            allRunes.AddQueue(crossingRune, "rotate", 0f, new Vector2(0, 0));
             crossingRune = null;
 
-            //hybridRune.GetComponent<Rune>().DestroyRune();
-            //hybridRune = null;
+            if (hybridRune != null)
+            {
+                Debug.Log("about to call destroy");
+                hybridRune.GetComponent<Rune>().DestroyRune();
+                hybridRune = null;
+            }
         }
     }
 
@@ -219,7 +280,7 @@ public class Rune : MonoBehaviour
 
         /**** adjust the effect area to the reach by scaling and moving the box ****/
         effectArea.transform.localScale = new Vector3(1f, reach / scale, 1f);
-        crossLine.transform.localScale = new Vector3(0.1f, reach / scale, 0.1f);
+        crossLine.transform.localScale = new Vector3(0.0f, reach / scale, 0.01f);
         float y = ((reach - (1f * scale)) / 2f) / scale;
         effectArea.transform.localPosition = new Vector3(0f, y, 0f);
         crossLine.transform.localPosition = new Vector3(0f, y, 0f);
@@ -235,23 +296,22 @@ public class Rune : MonoBehaviour
         // Therefore, make the old crossingRune recalculate its reach and delete the hybrid
         if ((crossingRune != null) && (crossingRune != other))
         {
-            //crossingRune.GetComponent<Rune>().hybridRune = null;
+            crossingRune.GetComponent<Rune>().hybridRune = null;
             crossingRune.GetComponent<Rune>().crossingRune = null;
             crossingRune.GetComponent<Rune>().Rotate(0);
 
-            //hybridRune.GetComponent<Rune>().DestroyRune();
-            //hybridRune = null;
+            hybridRune.GetComponent<Rune>().DestroyRune();
+            hybridRune = null;
         }
 
         // Make the other rune stop at the intersection point
-        allRunes.AddQueue(other, "adjust_length", 0f, point);
+        allRunes.AddQueueFirst(other, "adjust_length", 0f, point);
 
         // Set crossing to the other rune
         crossingRune = other;
         // Tell the other rune that it is crossing this rune
         crossingRune.GetComponent<Rune>().crossingRune = gameObject;
 
-        /*
         // Now, put the hybrid rune at the intersection point
         // with an angle of (r1 + r2)/2 aka the average of the two angles
         float avg_rot = ((rot + crossingRune.GetComponent<Rune>().rot) / 2);
@@ -266,12 +326,12 @@ public class Rune : MonoBehaviour
         else
         {
             hybridRune.GetComponent<Rune>().SetPosition(point);
-            GlobalRunes.AddQueue(hybridRune, "rotate", (avg_rot - hybridRune.GetComponent<Rune>().rot), new Vector2(0, 0));
+            allRunes.AddQueueFirst(hybridRune, "rotate", (avg_rot - hybridRune.GetComponent<Rune>().rot),
+                                    new Vector2(0, 0));
         }
 
         // Tell the other rune that it has this hybrid
         crossingRune.GetComponent<Rune>().hybridRune = hybridRune;
-        */
     }
 
     /** DESTROY RUNE **/
@@ -280,6 +340,7 @@ public class Rune : MonoBehaviour
     // when calling this function
     public void DestroyRune()
     {
+        Debug.Log("destroying");
         Destroy(gameObject);
     }
 }
