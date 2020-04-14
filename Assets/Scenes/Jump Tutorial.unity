@@ -133,7 +133,7 @@ GameObject:
   - component: {fileID: 64082999}
   - component: {fileID: 64082998}
   - component: {fileID: 64083000}
-  m_Layer: 9
+  m_Layer: 10
   m_Name: Environment
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1357,7 +1357,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   collisionMask:
     serializedVersion: 2
-    m_Bits: 512
+    m_Bits: 1024
   playerInput: {x: 0, y: 0}
 --- !u!4 &789293278 stripped
 Transform:
@@ -2005,6 +2005,16 @@ PrefabInstance:
       propertyPath: target
       value: 
       objectReference: {fileID: 565771650}
+    - target: {fileID: 6471538897332005821, guid: cf83d9c1c718b6b499acc89e22706ac6,
+        type: 3}
+      propertyPath: focusAreaSize.x
+      value: 2.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6471538897332005821, guid: cf83d9c1c718b6b499acc89e22706ac6,
+        type: 3}
+      propertyPath: focusAreaSize.y
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 6471538897332005823, guid: cf83d9c1c718b6b499acc89e22706ac6,
         type: 3}
       propertyPath: m_Name

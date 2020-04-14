@@ -163,6 +163,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Kill Plane
       objectReference: {fileID: 0}
+    - target: {fileID: 4468068621866346046, guid: d1da81b29e73743e29c1776ffd967053,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d1da81b29e73743e29c1776ffd967053, type: 3}
 --- !u!4 &266621254 stripped
@@ -223,6 +228,21 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1006415602815208090, guid: 4bcefb4a12ba7434b9e578d19c247224,
+        type: 3}
+      propertyPath: m_Size.x
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1006415602815208090, guid: 4bcefb4a12ba7434b9e578d19c247224,
+        type: 3}
+      propertyPath: m_Size.y
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1006415602815208090, guid: 4bcefb4a12ba7434b9e578d19c247224,
+        type: 3}
+      propertyPath: m_Offset.y
+      value: -1.75
+      objectReference: {fileID: 0}
     - target: {fileID: 1006415602815208091, guid: 4bcefb4a12ba7434b9e578d19c247224,
         type: 3}
       propertyPath: m_Constraints
@@ -263,10 +283,25 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1006415602815208095, guid: 4bcefb4a12ba7434b9e578d19c247224,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.15
+      objectReference: {fileID: 0}
+    - target: {fileID: 1006415602815208095, guid: 4bcefb4a12ba7434b9e578d19c247224,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.15
+      objectReference: {fileID: 0}
     - target: {fileID: 1006415602815208100, guid: 4bcefb4a12ba7434b9e578d19c247224,
         type: 3}
       propertyPath: m_Name
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 7621677769076752287, guid: 4bcefb4a12ba7434b9e578d19c247224,
+        type: 3}
+      propertyPath: collisionMask.m_Bits
+      value: 1024
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 1006415602815208089, guid: 4bcefb4a12ba7434b9e578d19c247224, type: 3}
@@ -325,6 +360,7 @@ MonoBehaviour:
   crossingRune: {fileID: 0}
   hybridRune: {fileID: 0}
   test_rot: 0.1
+  test_count: 0
 --- !u!61 &411531367
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -637,6 +673,16 @@ PrefabInstance:
       propertyPath: target
       value: 
       objectReference: {fileID: 374151465}
+    - target: {fileID: 6471538897332005821, guid: cf83d9c1c718b6b499acc89e22706ac6,
+        type: 3}
+      propertyPath: focusAreaSize.x
+      value: 2.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6471538897332005821, guid: cf83d9c1c718b6b499acc89e22706ac6,
+        type: 3}
+      propertyPath: focusAreaSize.y
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 6471538897332005823, guid: cf83d9c1c718b6b499acc89e22706ac6,
         type: 3}
       propertyPath: m_Name
@@ -743,7 +789,7 @@ GameObject:
   - component: {fileID: 959703751}
   - component: {fileID: 959703750}
   - component: {fileID: 959703752}
-  m_Layer: 9
+  m_Layer: 10
   m_Name: Environment
   m_TagString: Untagged
   m_Icon: {fileID: 0}
