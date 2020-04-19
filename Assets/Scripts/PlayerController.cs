@@ -55,6 +55,12 @@ public class PlayerController : MonoBehaviour
         // First calculate the velocity with no other issues
         CalculateVelocity();
 
+        // If the amount of movement is less than .01, then don't even move to avoid flickering
+        if (Mathf.Abs(velocity.x) < .01f)
+        {
+            velocity.x = 0;
+        }
+
         // Move the player
         controller.Move(velocity * Time.deltaTime);
 
