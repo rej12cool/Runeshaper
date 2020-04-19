@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 13312, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: platformTile
+  m_Name: Stone
   m_EditorClassIdentifier: 
-  m_Sprite: {fileID: 21300000, guid: 5fcc190c6db73ec4eb112821a795ad2b, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 16813f3edca0ca34abc4807beb2cb7fc, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Transform:
     e00: 1
