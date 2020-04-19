@@ -9,7 +9,8 @@ public class Controller2D : RaycastController
 
     private const float MaxClimbAngle = 80; // Max angle the object can climb
     private const float MaxDescendAngle = 75; // Max angle the object can descend without falling off
-    private const float HoistSpeed = .05f;
+    private const float HoistSpeed = .05f; // Speed at which the object climbs up a wall over an edge
+    private const float PostHoistSpeed = .1f; // Speed at which the object moves after finishing hoisting
 
     public void Move(Vector2 moveAmount, bool standingOnPlatform = false)
     {
@@ -29,6 +30,13 @@ public class Controller2D : RaycastController
 
         if (moveAmount.y != 0)
             VerticalCollisions(ref moveAmount);
+
+        // If finished hoisting, move the player a little bit in the same direction and don't move up/down
+        if (collisions.hoistingOld && !collisions.hoisting)
+        {
+            moveAmount.x = PostHoistSpeed * collisions.hoistDirection;
+            moveAmount.y = 0;
+        }
 
         // Perform the actual translation here
         transform.Translate(moveAmount);
@@ -123,9 +131,15 @@ public class Controller2D : RaycastController
                 // If the top ray had nothing to hit and the rest of it is blocked
                 if (i == horizontalRayCount - 1 && (collisions.left && directionX == -1 || collisions.right && directionX == 1))
                 {
+                    // If on a platform or moving downwards
                     if (collisions.below || Mathf.Sign(moveAmount.y) == -1)
                     {
+                        // Move upwards with the hoist speed
                         moveAmount.y = HoistSpeed;
+                        // Object is now hoisting
+                        collisions.hoisting = true;
+                        // Capture direction for post-hoist movement in x
+                        collisions.hoistDirection = directionX;
                     }
                 }
             }
@@ -249,11 +263,13 @@ public class Controller2D : RaycastController
         public Vector2 oldMoveAmount;
 
         public float slopeAngle, slopeAngleOld;
+        public float hoistDirection;
 
         // If any of these 4 bools are true, then there is an object in the direction of the variable name
         public bool above, below;
         public bool left, right;
         public bool climbingSlope, descendingSlope;
+        public bool hoisting, hoistingOld;
 
         // Reset every time
         public void Reset()
@@ -263,6 +279,8 @@ public class Controller2D : RaycastController
             climbingSlope = descendingSlope = false;
             slopeAngleOld = slopeAngle;
             slopeAngle = 0;
+            hoistingOld = hoisting;
+            hoisting = false;
         }
     }
 }
