@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEditor;
 
 public class Rune : MonoBehaviour
 {
@@ -351,7 +350,7 @@ public class Rune : MonoBehaviour
         // AIR + AIR => AIR
         if ((r1.type == RuneType.AIR) && (r2.type == RuneType.AIR))
         {
-            h_prefab = (GameObject)AssetDatabase.LoadAssetAtPath("Assets/Prefabs/Runes/AirRune.prefab", typeof(GameObject));
+            h_prefab = (GameObject)Resources.Load("Prefabs/Runes/AirRune", typeof(GameObject));
 
             // Two air runes produce a third air rune with a max reach that is 
             // the sum of their remaining lengths
@@ -370,7 +369,7 @@ public class Rune : MonoBehaviour
         if (((r1.type == RuneType.FIRE) && (r2.type == RuneType.WATER))
             || ((r2.type == RuneType.FIRE) && (r1.type == RuneType.WATER)))
         {
-            h_prefab = (GameObject)AssetDatabase.LoadAssetAtPath("Assets/Prefabs/Runes/SteamRune.prefab", typeof(GameObject));
+            h_prefab = (GameObject)Resources.Load("Prefabs/Runes/AirRune", typeof(GameObject));
             h_max_reach = 0;
             return true;
         }

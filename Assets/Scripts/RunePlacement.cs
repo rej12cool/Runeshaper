@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEditor;
 using UnityEngine.Tilemaps;
 
 public class RunePlacement : MonoBehaviour
@@ -160,7 +159,7 @@ public class RunePlacement : MonoBehaviour
 
 
     	// Pick the type of rune and get its prefab
-    	prefab = (GameObject)AssetDatabase.LoadAssetAtPath("Assets/Prefabs/Runes/AirRune.prefab", typeof(GameObject));
+    	prefab = (GameObject)Resources.Load("Prefabs/Runes/AirRune", typeof(GameObject));
 
 	    // Instantiate a new (inactive) rune from prefab
 	    GameObject newRune = Instantiate(prefab, runeBase, Quaternion.Euler(0f, 0f, rot), GameObject.FindWithTag("AllRunes").transform);
