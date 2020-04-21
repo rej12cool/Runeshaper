@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class AirRune : MonoBehaviour
 {
-    private const float Force = 20f;
+    private const float Force = 40f;
 
     private Rune rune;
     private ArrayList inside;
@@ -23,11 +23,13 @@ public class AirRune : MonoBehaviour
             // Loop through all entities that have entered the effect area
             foreach (PlayerController player in inside)
             {
-                // Apply the upward "force" to the y velocity to have the appearance of it applying the force
+                // Apply the upward "force" to the velocity to have the appearance of it applying the force
                 float distance = Vector2.Distance(player.transform.position, rune.GetPosition());
 
-                // TODO: Make this not vertical only
-                player.velocity.y = Force / (Mathf.Pow(distance, .6f));
+                // Multiply by the direction of the rune and add to player's velocity
+                Vector2 dir = rune.GetVector() * (Force / (Mathf.Pow(distance, .6f)));
+            	player.velocity.x = dir.x;
+                player.velocity.y = dir.y;
             }
         }
     }
