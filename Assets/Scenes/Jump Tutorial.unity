@@ -2216,6 +2216,12 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1006415602815208088, guid: 4bcefb4a12ba7434b9e578d19c247224,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 3c2b68649b150424191524c003d265d0,
+        type: 3}
     - target: {fileID: 1006415602815208089, guid: 4bcefb4a12ba7434b9e578d19c247224,
         type: 3}
       propertyPath: jumpTakeOffSpeed
