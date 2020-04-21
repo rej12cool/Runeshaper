@@ -9,9 +9,9 @@ public class PlayerController : MonoBehaviour
 
     private Vector2 directionalInput; // Reference to the input
 
-    private float jumpHeight = 1.3f; // How high the jump is at it's maximum
+    private float jumpHeight = 2 * 1.3f; // How high the jump is at it's maximum
     private float timeToJumpApex = .3f; // How long it takes to get to the apex of the jump
-    private float moveSpeed = 6; // X velocity
+    private float moveSpeed = 2 * 6; // X velocity
     private float fallMultiplier = 1.4f; // How fast the player falls relative to rising (for better jump)
     private float accelerationTimeAirborne = .2f; // How long it takes to reverse direction while in the air
     private float accelerationTimeGrounded = .1f; // How long it takes to reverse direction while on the ground

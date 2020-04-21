@@ -52,12 +52,6 @@ public class GlobalRunes : MonoBehaviour
         }
     }
 
-    public void Test()
-    {
-        Debug.Log("Test successful!");
-    }
-
-
     // AddQueue adds a rune and the desired update to the BACK of the queue
     public void AddQueue(GameObject rune, string mode, float rot, Vector2 point)
     {
