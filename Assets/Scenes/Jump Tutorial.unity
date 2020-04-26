@@ -2032,6 +2032,64 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2598183486688140381, guid: 42bfa614e16074fee9d919a664091222,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 0b51ae8e9f0eccd43bd935afcf6e763b,
+        type: 3}
+    - target: {fileID: 2598183486688140381, guid: 42bfa614e16074fee9d919a664091222,
+        type: 3}
+      propertyPath: m_Size.x
+      value: 21.300001
+      objectReference: {fileID: 0}
+    - target: {fileID: 2598183486688140381, guid: 42bfa614e16074fee9d919a664091222,
+        type: 3}
+      propertyPath: m_Size.y
+      value: 21.373053
+      objectReference: {fileID: 0}
+    - target: {fileID: 2598183486688140381, guid: 42bfa614e16074fee9d919a664091222,
+        type: 3}
+      propertyPath: m_WasSpriteAssigned
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2598183486688140382, guid: 42bfa614e16074fee9d919a664091222,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -21.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2598183487307991993, guid: 42bfa614e16074fee9d919a664091222,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 0b51ae8e9f0eccd43bd935afcf6e763b,
+        type: 3}
+    - target: {fileID: 2598183487719384769, guid: 42bfa614e16074fee9d919a664091222,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 0b51ae8e9f0eccd43bd935afcf6e763b,
+        type: 3}
+    - target: {fileID: 2598183487719384769, guid: 42bfa614e16074fee9d919a664091222,
+        type: 3}
+      propertyPath: m_Size.x
+      value: 21.300001
+      objectReference: {fileID: 0}
+    - target: {fileID: 2598183487719384769, guid: 42bfa614e16074fee9d919a664091222,
+        type: 3}
+      propertyPath: m_Size.y
+      value: 21.373053
+      objectReference: {fileID: 0}
+    - target: {fileID: 2598183487719384769, guid: 42bfa614e16074fee9d919a664091222,
+        type: 3}
+      propertyPath: m_WasSpriteAssigned
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2598183487719384770, guid: 42bfa614e16074fee9d919a664091222,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 21.3
+      objectReference: {fileID: 0}
     - target: {fileID: 2598183488346695287, guid: 42bfa614e16074fee9d919a664091222,
         type: 3}
       propertyPath: m_LocalPosition.x
