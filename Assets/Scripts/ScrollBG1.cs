@@ -10,10 +10,10 @@ public class ScrollBG1 : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (transform.position.x >= centerBackground.position.x + 21.21f)
-            centerBackground.position = new Vector2(centerBackground.position.x + 21.21f, transform.position.y);
+        if (transform.position.x >= centerBackground.position.x + 21.3f)
+            centerBackground.position = new Vector2(centerBackground.position.x + 21.3f, transform.position.y);
 
-        else if (transform.position.x <= centerBackground.position.x - 21.21)
-            centerBackground.position = new Vector2(centerBackground.position.x - 21.21f, transform.position.y);
+        else if (transform.position.x <= centerBackground.position.x - 21.3f)
+            centerBackground.position = new Vector2(centerBackground.position.x - 21.3f, transform.position.y);
     }
 }
