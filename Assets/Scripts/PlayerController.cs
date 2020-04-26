@@ -8,6 +8,7 @@ public class PlayerController : MonoBehaviour
     public Vector2 velocity;
 
     private Vector2 directionalInput; // Reference to the input
+    private const float PostHoistSpeed = .1f; // Speed at which the object moves after finishing hoisting
 
     private float jumpHeight = 1.3f; // How high the jump is at it's maximum
     private float timeToJumpApex = .3f; // How long it takes to get to the apex of the jump
@@ -59,6 +60,11 @@ public class PlayerController : MonoBehaviour
         if (Mathf.Abs(velocity.x) < .01f)
         {
             velocity.x = 0;
+        }
+
+        if (controller.collisions.hoisting)
+        {
+            velocity.x = PostHoistSpeed;
         }
 
         // Move the player
