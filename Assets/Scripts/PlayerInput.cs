@@ -5,6 +5,7 @@ using UnityEngine;
 [RequireComponent(typeof(PlayerController))]
 public class PlayerInput : MonoBehaviour
 {
+    Animator animator;
     private PlayerController player;
     private Vector2 respawnPosition;
     private CameraFollow mainCamera;
@@ -21,7 +22,7 @@ public class PlayerInput : MonoBehaviour
     {
         // Get reference to the PlayerController script
         player = GetComponent<PlayerController>();
-
+        animator = GetComponent<Animator>();
         respawnPosition = GameObject.FindWithTag("Respawn").transform.position;
         mainCamera = GameObject.FindWithTag("MainCamera").GetComponent<CameraFollow>();
         astralForm = GameObject.FindWithTag("AstralForm");
@@ -29,6 +30,12 @@ public class PlayerInput : MonoBehaviour
 
     void Update()
     {
+        // Default animation settings
+        animator.SetBool("idle", true);
+        animator.SetBool("move_right", false);
+        animator.SetBool("move_left", false);
+        animator.SetBool("jump", false);
+
         // Quit game signal
         if (Input.GetKey("escape"))
         {
@@ -53,6 +60,15 @@ public class PlayerInput : MonoBehaviour
             if (Input.GetButton("Jump"))
             {
                 player.OnJumpInput();
+                animator.SetBool("jump", true);
+            }
+            else if (Input.GetKey(KeyCode.D))
+            {
+                animator.SetBool("move_right", true);
+            }
+            else if (Input.GetKey(KeyCode.A))
+            {
+                animator.SetBool("move_left", true);
             }
         }
 
