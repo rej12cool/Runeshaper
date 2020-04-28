@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 [RequireComponent(typeof(PlayerController))]
 public class PlayerInput : MonoBehaviour
@@ -45,7 +46,7 @@ public class PlayerInput : MonoBehaviour
         // Reset level signal
         if (Input.GetKey("r"))
         {
-            Application.LoadLevel(Application.loadedLevel);
+            SceneManager.LoadScene("Menu");
             //player.transform.position = respawnPosition;
         }
 
