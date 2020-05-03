@@ -1953,6 +1953,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: BackgroundMusic
       objectReference: {fileID: 0}
+    - target: {fileID: 3714831184107229127, guid: 31ec0af39461b4bf0a1933e4cc0bb522,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3714831184107229129, guid: 31ec0af39461b4bf0a1933e4cc0bb522,
         type: 3}
       propertyPath: m_LocalPosition.x
