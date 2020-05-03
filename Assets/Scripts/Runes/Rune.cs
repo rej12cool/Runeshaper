@@ -41,6 +41,10 @@ public class Rune : MonoBehaviour
     // If crossing a rune, this is the hybrid rune created
     public GameObject hybridRune;
 
+    // The runes creating this rune (if it is a hybrid)
+    public Rune parent1 = null;
+    public Rune parent2 = null;
+
     public float test_rot;
     public int test_count;
 
@@ -148,6 +152,18 @@ public class Rune : MonoBehaviour
             hybridRune.GetComponent<Rune>().wallLine.GetComponent<BoxCollider2D>().enabled = false;
         }
 
+        // If this rune is a hybrid of two runes, temporarily deactivate those runes' colliders too
+        if (parent1 != null)
+        {
+            parent1.crossLine.GetComponent<BoxCollider2D>().enabled = false;
+            parent1.wallLine.GetComponent<BoxCollider2D>().enabled = false;
+        }
+        if (parent2 != null)
+        {
+            parent2.crossLine.GetComponent<BoxCollider2D>().enabled = false;
+            parent2.wallLine.GetComponent<BoxCollider2D>().enabled = false;
+        }
+
         /**** Calculate the furthest the rune can reach in the environment (max distance of max_reach) ****/
         float reach = max_reach;
         float wall_reach = max_reach;
@@ -217,6 +233,15 @@ public class Rune : MonoBehaviour
         if (hybridRune != null)
         {
             hybridRune.GetComponent<Rune>().crossLine.GetComponent<BoxCollider2D>().enabled = true;
+        }
+        // Re-enable the parents' collider (if they exist)
+        if (parent1 != null)
+        {
+            parent1.crossLine.GetComponent<BoxCollider2D>().enabled = true;
+        }
+        if (parent2 != null)
+        {
+            parent2.crossLine.GetComponent<BoxCollider2D>().enabled = true;
         }
 
 
@@ -315,7 +340,8 @@ public class Rune : MonoBehaviour
         {
             // Now, put the hybrid rune at the intersection point
             // with an angle of (r1 + r2)/2 aka the average of the two vectors
-            float avg_rot = Vector2.Angle(new Vector2(0, 1), ((GetVector() + crossingRune.GetComponent<Rune>().GetVector()) / 2));
+            float avg_rot = Vector2.SignedAngle(new Vector2(0, 1), ((GetVector() + crossingRune.GetComponent<Rune>().GetVector()) / 2));
+            //float avg_rot = Vector2.Angle(new Vector2(0f, 1f), (point - ((GetPosition() + crossingRune.GetComponent<Rune>().GetPosition()) / 2)));
             // Create hybrid if doesn't already exist (this is a new cross)
             if (hybridRune == null)
             {
@@ -378,7 +404,7 @@ public class Rune : MonoBehaviour
         if (((r1.type == RuneType.FIRE) && (r2.type == RuneType.WATER))
             || ((r2.type == RuneType.FIRE) && (r1.type == RuneType.WATER)))
         {
-            h_prefab = (GameObject)Resources.Load("Prefabs/Runes/AirRune", typeof(GameObject));
+            h_prefab = (GameObject)Resources.Load("Prefabs/Runes/SteamRune", typeof(GameObject));
             h_max_reach = 0;
             return true;
         }
@@ -387,11 +413,19 @@ public class Rune : MonoBehaviour
     }
 
     /** DESTROY RUNE **/
-    // Destroys this rune; DOES NOT UPDATE VARIABLES IN OTHER RUNES
-    // In other words, make sure all references to this rune are deleted too
-    // when calling this function
+    // Destroys this rune and any references to it
     public void DestroyRune()
     {
+        if (hybridRune != null)
+        {
+            hybridRune.GetComponent<Rune>().DestroyRune();
+        }
+        if (crossingRune != null)
+        {
+            crossingRune.GetComponent<Rune>().hybridRune = null;
+            crossingRune.GetComponent<Rune>().crossingRune = null;
+            allRunes.AddQueue(crossingRune, "rotate", 0, new Vector2(0, 0));
+        }
         Destroy(gameObject);
     }
 }

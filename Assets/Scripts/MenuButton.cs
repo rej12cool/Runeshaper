@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class Button : MonoBehaviour {
+public class MenuButton : MonoBehaviour {
 
     public void RestartGame() {
         SceneManager.LoadScene("Jump Tutorial");

@@ -81,6 +81,9 @@ public class PlayerInput : MonoBehaviour
             // If not currently in astral form, go into astral form
             if (!projecting)
             {
+            	// Nullify player's movement
+            	player.SetDirectionalInput(new Vector2(0f,0f));
+
                 astralForm.transform.position = player.transform.position + new Vector3(0f, 1f, 0f);
                 astralForm.GetComponent<AstralProject>().Begin();
                 // Focus camera on astral form
