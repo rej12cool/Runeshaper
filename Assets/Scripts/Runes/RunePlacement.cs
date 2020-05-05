@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class RunePlacement : MonoBehaviour
 {
-	public GameObject selectHighlight; // The sprite with that adds a box around a selected tile
+	public GameObject selectButton; // The button that adds a box around a selected tile and can click to place
     public Slider rotationSlider; // The slider that is shown when a rune is selected
     public Button deleteButton; // The button to delete a rune tile
     public RuneCount rc; // The RuneCount script
@@ -15,6 +15,7 @@ public class RunePlacement : MonoBehaviour
     private string runePrefabPath = "";     // the file path of the prefab of currently selected rune type
     private string iconPrefabPath = "";     // the file path of the tile icon for the current type
     private bool noneToPlace = false;   // whether or not the user can place any more runes
+    private Sprite highlightTileSprite; // the sprite that shows on an empty, placeable tile
 
 	private TilemapCollider2D env;	// The environment (aka Tilemap collision area) that can place runes in
     private BoxCollider2D sliderCollider; // The rectangle of the slider, used to ignore clicking a tile while adjusting the slider
@@ -62,6 +63,9 @@ public class RunePlacement : MonoBehaviour
 
         //Adds a listener to the delete button for when it is pressed
         deleteButton.onClick.AddListener (() => {DeleteRune ();});
+
+        //Adds a listener for when the select button is pressed
+        selectButton.GetComponent<Button>().onClick.AddListener (() => {ClickSelect ();});
     }
 
     // Update is called once per frame
@@ -78,16 +82,17 @@ public class RunePlacement : MonoBehaviour
         	   CheckTile(cursorPos);
             }
         }
-        // Evaluate a click when hovering on a placeable tile
-        if (Input.GetButton("Fire1"))
+    }
+
+    // Evaluate a click on the select button
+    public void ClickSelect()
+    {
+        // Only call select if hovering on placeable tile, and haven't already clicked this tile, and
+        // not currently moving the slider in with a tile selected
+        if (hovering && (lastClickTile != tilePos) && (!selected || !sliderCollider.OverlapPoint(cursorPos)))
         {
-        	// Only call select if hovering on placeable tile, and haven't already clicked this tile, and
-            // not currently moving the slider in with a tile selected
-        	if (hovering && (lastClickTile != tilePos) && (!selected || !sliderCollider.OverlapPoint(cursorPos)))
-        	{
-        		lastClickTile = tilePos;
-        		SelectTile(tilePos);
-        	}
+            lastClickTile = tilePos;
+            SelectTile(tilePos);
         }
     }
 
@@ -158,7 +163,7 @@ public class RunePlacement : MonoBehaviour
         // Remove the currently selected rune from the list
         placedRuneList.Remove(selRune);
 
-        // Let RuneCOunt know we deleted one
+        // Let RuneCount know we deleted one
         rc.RemovedARune(selRune.rune.type);
 
         // Call the delete function for the rune
@@ -201,20 +206,51 @@ public class RunePlacement : MonoBehaviour
     // Begins hovering on the tile at pos if it is placeable 
     void CheckTile(Vector2 pos)
     {
+        // The tile at the cursor
+        Vector2 cursorTile = new Vector2((Mathf.Floor(pos.x) + 0.5f), (Mathf.Floor(pos.y) + 0.5f));
+
+        // If this is the same tile from the last check, no need to update anything!
+        if (cursorTile == tilePos)
+        {
+            return;
+        }
+
+
     	bool updateHover = hovering;
 
        	// If the cursor position is over the Env collider, check for placeable tile
     	if (env.OverlapPoint(pos))
     	{
     		// Snap tile position to grid
-    		tilePos.x = Mathf.Floor(pos.x) + 0.5f;
-    		tilePos.y = Mathf.Floor(pos.y) + 0.5f;
+    		tilePos.x = cursorTile.x;
+    		tilePos.y = cursorTile.y;
 
     		// If placeable tile, indicate that hovering and show the highlight
     		if (IsPlaceable(tilePos))
     		{
-	    		selectHighlight.transform.position = tilePos;
+                // Move the highlight onto this tile
+	    		selectButton.transform.position = tilePos;
 	    		updateHover = true;
+
+                // If hovering on a rune, change the highlight sprite to the same type as that rune
+                bool onRune = false;
+                foreach (PlacedRune p in placedRuneList)
+                {
+                    if (p.tile == tilePos)
+                    {
+                        selectButton.GetComponent<Image>().sprite = p.icon.GetComponent<SpriteRenderer>().sprite;
+                        onRune = true;
+                        break;
+                    }
+                }
+                // Otherwise, reset to current placing-type (if need to)
+                if (!onRune)
+                {
+                    if (selectButton.GetComponent<Image>().sprite != highlightTileSprite)
+                    {
+                        selectButton.GetComponent<Image>().sprite = highlightTileSprite;
+                    }
+                }
     		}
     		// Indicate else if otherwise
     		else
@@ -227,15 +263,15 @@ public class RunePlacement : MonoBehaviour
     		updateHover = false;
     	}
 
-    	// Turn off sprite renderer if just stopped hovering
+    	// Turn off button if just stopped hovering
     	if (!updateHover && (updateHover != hovering))
     	{
-    		selectHighlight.GetComponent<SpriteRenderer>().enabled = false;
+    		selectButton.SetActive(false);
     	}
     	// Turn on if just started hovering
     	else if (updateHover && (updateHover != hovering))
     	{
-    		selectHighlight.GetComponent<SpriteRenderer>().enabled = true;
+    		selectButton.SetActive(true);
     	}
 
     	hovering = updateHover;
@@ -350,7 +386,8 @@ public class RunePlacement : MonoBehaviour
         iconPrefabPath = filepathI;
 
         // Change the cursor tile highlight sprite
-        selectHighlight.GetComponent<SpriteRenderer>().sprite = newS;
+        selectButton.GetComponent<Image>().sprite = newS;
+        highlightTileSprite = newS;
     }
 
     // Called by RuneCount.cs, notifies this script if the player is out of runes or not
@@ -373,8 +410,11 @@ public class RunePlacement : MonoBehaviour
 
             // Reset vars
             selected = false;
-            hovering = false;
+            resetingSlider = false;
             lastClickTile = new Vector2(0f, 0f);
+            selRune = new PlacedRune(null, new Vector2(0f, 0f), 0f, 0f, 0f, null);
+            tilePos = new Vector2(0f ,0f);
+            hovering = false;
 
             // Show all icons for each rune
             foreach (PlacedRune p in placedRuneList)
@@ -391,7 +431,7 @@ public class RunePlacement : MonoBehaviour
 			Cursor.visible = false;
 
 			// Turn off the highlight, slider, and button
-			selectHighlight.GetComponent<SpriteRenderer>().enabled = false;
+			selectButton.SetActive(false);
             rotationSlider.gameObject.SetActive(false);
             deleteButton.gameObject.SetActive(false);
 
