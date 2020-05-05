@@ -37,17 +37,11 @@ public class PlayerInput : MonoBehaviour
         animator.SetBool("move_left", false);
         animator.SetBool("jump", false);
 
-        // Quit game signal
-        if (Input.GetKey("escape"))
-        {
-            Application.Quit();
-        }
 
         // Reset level signal
         if (Input.GetKey("r"))
         {
-            SceneManager.LoadScene("Menu");
-            //player.transform.position = respawnPosition;
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
 
         // Move the player if not projecting
