@@ -145,9 +145,9 @@ MonoBehaviour:
   target: {fileID: 0}
   focusAreaSize: {x: 2.5, y: 2}
   verticalOffset: 0
-  lookAheadDistX: 0
-  lookSmoothTimeX: 0
-  verticalSmoothTime: 0
+  lookAheadDistX: 4
+  lookSmoothTimeX: 0.2
+  verticalSmoothTime: 0.2
 --- !u!114 &9061555034235335182
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -194,6 +194,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2598183488346695287}
     m_Modifications:
+    - target: {fileID: 1633794687988171963, guid: 5faba1b6f7aa845459f82e86b340dd45,
+        type: 3}
+      propertyPath: cam
+      value: 
+      objectReference: {fileID: 9061555034235335183}
+    - target: {fileID: 1642331976567909583, guid: 5faba1b6f7aa845459f82e86b340dd45,
+        type: 3}
+      propertyPath: cam
+      value: 
+      objectReference: {fileID: 9061555034235335183}
     - target: {fileID: 4357461183467381628, guid: 5faba1b6f7aa845459f82e86b340dd45,
         type: 3}
       propertyPath: m_Name
@@ -347,6 +357,11 @@ PrefabInstance:
       propertyPath: m_WasSpriteAssigned
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 5444615427742581122, guid: 5faba1b6f7aa845459f82e86b340dd45,
+        type: 3}
+      propertyPath: cam
+      value: 
+      objectReference: {fileID: 9061555034235335183}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5faba1b6f7aa845459f82e86b340dd45, type: 3}
 --- !u!4 &2598183487316851078 stripped
