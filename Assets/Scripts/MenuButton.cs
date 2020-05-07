@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 public class MenuButton : MonoBehaviour {
 
     public void RestartGame() {
-        SceneManager.LoadScene("Jump Tutorial");
+        SceneManager.LoadScene("1-0");
     }
 
     public void QuitGame() {
