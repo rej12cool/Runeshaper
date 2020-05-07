@@ -64,7 +64,7 @@ public class PlayerController : MonoBehaviour
 
         if (controller.collisions.hoisting)
         {
-            velocity.x = PostHoistSpeed;
+            velocity.x = Mathf.Sign(velocity.x) * PostHoistSpeed;
         }
 
         // Move the player
