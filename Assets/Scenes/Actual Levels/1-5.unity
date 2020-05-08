@@ -747,7 +747,7 @@ MonoBehaviour:
     m_Bits: 4096
   localWaypoints:
   - {x: 0, y: 0, z: 0}
-  - {x: -6, y: 0, z: 0}
+  - {x: -6.5, y: 0, z: 0}
   easeAmount: 1
   speed: 3
   waitTime: 0.5
@@ -836,7 +836,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 324971394}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3, y: -2.5, z: -48.37031}
+  m_LocalPosition: {x: 3, y: -2.5, z: 0}
   m_LocalScale: {x: 250, y: 100, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -13180,7 +13180,7 @@ MonoBehaviour:
     m_Bits: 4096
   localWaypoints:
   - {x: 0, y: 0, z: 0}
-  - {x: 6, y: 0, z: 0}
+  - {x: 6.5, y: 0, z: 0}
   easeAmount: 1
   speed: 3
   waitTime: 0.5
@@ -13269,7 +13269,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1841148785}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -12, y: -2.5, z: -48.37031}
+  m_LocalPosition: {x: -12, y: -2.5, z: 0}
   m_LocalScale: {x: 250, y: 100, z: -6.08}
   m_Children: []
   m_Father: {fileID: 0}
