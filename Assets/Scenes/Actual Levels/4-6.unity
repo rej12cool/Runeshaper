@@ -7101,7 +7101,7 @@ MonoBehaviour:
     m_Bits: 1024
   passengerMask:
     serializedVersion: 2
-    m_Bits: 2048
+    m_Bits: 4096
   localWaypoints:
   - {x: 0, y: 0, z: 0}
   - {x: 16, y: 0, z: 0}

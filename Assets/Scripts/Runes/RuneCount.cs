@@ -166,12 +166,12 @@ public class RuneCount : MonoBehaviour
     	// If didn't pick up in placement mode, show the UI briefly
     	if (rp.canPlace != true)
     	{
-    		StartCoroutine(FlashUI());
+    		StartCoroutine(PopupUI());
     	}
     }
 
     // Coroutine to turn on the UI, then off
-    IEnumerator FlashUI()
+    IEnumerator PopupUI()
     {
     	GetComponent<Canvas>().enabled = true;
     	yield return new WaitForSeconds(2.5f);
