@@ -10,6 +10,7 @@ public class RunePlacement : MonoBehaviour
     public Slider rotationSlider; // The slider that is shown when a rune is selected
     public Button deleteButton; // The button to delete a rune tile
     public RuneCount rc; // The RuneCount script
+    public bool canPlace = false;   // Determines if in placement mode
 
     // Variables changed by RuneCount.cs
     private string runePrefabPath = "";     // the file path of the prefab of currently selected rune type
@@ -19,7 +20,6 @@ public class RunePlacement : MonoBehaviour
 
 	private TilemapCollider2D env;	// The environment (aka Tilemap collision area) that can place runes in
     private BoxCollider2D sliderCollider; // The rectangle of the slider, used to ignore clicking a tile while adjusting the slider
-	private bool canPlace = false;	// Determines if in placement mode
 	private Vector2 cursorPos = new Vector2(0f, 0f); // The world position of the cursor
 	private bool hovering = false;	// Determines if cursor is hovering over a placeable tile
 	private Vector2 tilePos = new Vector2(0f ,0f);	// The position of the active tile
@@ -164,7 +164,7 @@ public class RunePlacement : MonoBehaviour
         placedRuneList.Remove(selRune);
 
         // Let RuneCount know we deleted one
-        rc.RemovedARune(selRune.rune.type);
+        rc.PickedUpRune(selRune.rune.type);
 
         // Call the delete function for the rune
         selRune.rune.DestroyRune();
@@ -404,9 +404,10 @@ public class RunePlacement : MonoBehaviour
 
 		if (update)
 		{
-			// Make the cursor visible and stay in the window
+			// Make sure the cursor is visible
 			Cursor.visible = true;
-			Cursor.lockState = CursorLockMode.Confined;
+            // Re-activate if issues are caused by mouse going off-screen:
+			//Cursor.lockState = CursorLockMode.Confined;
 
             // Reset vars
             selected = false;
@@ -423,13 +424,10 @@ public class RunePlacement : MonoBehaviour
             }
 
             // Show the rune selection UI
-            rc.gameObject.SetActive(true);
+            rc.GetComponent<Canvas>().enabled = true;
 		}
 		else
 		{
-			// Hide the cursor
-			Cursor.visible = false;
-
 			// Turn off the highlight, slider, and button
 			selectButton.SetActive(false);
             rotationSlider.gameObject.SetActive(false);
@@ -442,7 +440,7 @@ public class RunePlacement : MonoBehaviour
             }
 
             // Hide the rune selection UI
-            rc.gameObject.SetActive(false);
+            rc.GetComponent<Canvas>().enabled = false;
 		}
     }
 }

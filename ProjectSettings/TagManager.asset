@@ -8,6 +8,7 @@ TagManager:
   - AstralForm
   - Env
   - AllRunes
+  - RuneCount
   layers:
   - Default
   - TransparentFX
@@ -20,7 +21,7 @@ TagManager:
   - 
   - Rune
   - Platform
-  - Player
+  - Obscuration
   - 
   - 
   - 
