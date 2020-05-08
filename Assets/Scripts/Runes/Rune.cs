@@ -17,6 +17,16 @@ public class Rune : MonoBehaviour
         STEAM
     }
 
+    // The particle systems
+    public ParticleSystem particles1;
+    public ParticleSystem particles2;
+    public ParticleSystem particles3;
+
+    // The scale of each particle along the reach (0.0 to 1.0)
+    public float particleScale1;
+    public float particleScale2;
+    public float particleScale3;
+
     // The direction of the rune (0 is straight up)
     public float rot;
     // The furthest distance that the rune effect can reach
@@ -48,6 +58,13 @@ public class Rune : MonoBehaviour
     public float test_rot;
     public int test_count;
 
+    // Should this rune recalculate its reach on a regular interval? (used for moving platforms)
+    public bool recalcOnInterval = false;
+    // Number of updates between each interval
+    public int intervalUpdatesCount = 1;
+    // Current number of updates
+    public int updateNum = -1;
+
 
     // Set up the rune for its current config
     void Start()
@@ -69,6 +86,14 @@ public class Rune : MonoBehaviour
             allRunes.AddQueue(this.gameObject, "rotate", test_rot, new Vector2(0, 0));
             test_count--;
         }
+
+        // Re-calculates reach on an interval if set
+        if (recalcOnInterval && (updateNum % intervalUpdatesCount == 0))
+        {
+            allRunes.AddQueue(this.gameObject, "rotate", 0f, new Vector2(0, 0));
+        }
+
+        updateNum++;
     }
 
     /** GET RUNE TYPE **/
@@ -280,6 +305,9 @@ public class Rune : MonoBehaviour
                 hybridRune = null;
             }
         }
+
+        // Update the particle system for the new length
+        UpdateParticles(reach);
     }
 
     /** ADJUST LENGTH **/
@@ -297,6 +325,9 @@ public class Rune : MonoBehaviour
         effectArea.transform.localPosition = new Vector3(0f, y, 0f);
         crossLine.transform.localPosition = new Vector3(0f, y, 0f);
         // (don't adjust the wall reach (aka wallLine)
+
+        // Update the length of the effect particles
+        UpdateParticles(reach);
     }
 
     /** CROSS **/
@@ -411,6 +442,26 @@ public class Rune : MonoBehaviour
 
         return false;
     }
+
+
+    /** UPDATE PARTICLES **/
+    // Scales the effect particles by the given reach
+    public void UpdateParticles(float reach)
+    {
+        if (particles1 != null)
+        {
+    	   particles1.startLifetime = reach * particleScale1;
+        }
+        if (particles2 != null)
+        {
+           particles2.startLifetime = reach * particleScale2;
+        }
+        if (particles3 != null)
+        {
+           particles3.startLifetime = reach * particleScale3;
+        }
+    }
+
 
     /** DESTROY RUNE **/
     // Destroys this rune and any references to it

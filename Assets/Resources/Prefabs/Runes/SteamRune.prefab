@@ -196,6 +196,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   allRunes: {fileID: 0}
+  particles1: {fileID: 0}
+  particles2: {fileID: 0}
+  particles3: {fileID: 0}
+  particleScale1: 0
+  particleScale2: 0
+  particleScale3: 0
   rot: 0
   max_reach: 10
   scale: 1
@@ -209,6 +215,9 @@ MonoBehaviour:
   parent2: {fileID: 0}
   test_rot: 0
   test_count: 0
+  recalcOnInterval: 0
+  intervalUpdatesCount: 1
+  updateNum: -1
 --- !u!1 &4566433488498762913
 GameObject:
   m_ObjectHideFlags: 0
@@ -221,7 +230,7 @@ GameObject:
   - component: {fileID: 2754105737495718516}
   - component: {fileID: 3727461913596018599}
   - component: {fileID: 2702187347483150704}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: effectArea
   m_TagString: Untagged
   m_Icon: {fileID: 0}

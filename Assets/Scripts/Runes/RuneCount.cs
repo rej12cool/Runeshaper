@@ -123,8 +123,8 @@ public class RuneCount : MonoBehaviour
     	}
     }
 
-    // Called by RunePlacement with deleting a rune (add 1 to count)
-    public void RemovedARune(Rune.RuneType type)
+    // Called by RunePlacement (with deleting a rune) or gem pickups (PickupRune)
+    public void PickedUpRune(Rune.RuneType type)
     {
     	if (type == Rune.RuneType.AIR)
     	{
@@ -161,6 +161,23 @@ public class RuneCount : MonoBehaviour
     			rp.UpdateRuneAvailability(false);
     			SelectFire();
     		}
+    	}
+
+    	// If didn't pick up in placement mode, show the UI briefly
+    	if (rp.canPlace != true)
+    	{
+    		StartCoroutine(PopupUI());
+    	}
+    }
+
+    // Coroutine to turn on the UI, then off
+    IEnumerator PopupUI()
+    {
+    	GetComponent<Canvas>().enabled = true;
+    	yield return new WaitForSeconds(2.5f);
+    	if (rp.canPlace != true)
+    	{
+    		GetComponent<Canvas>().enabled = false;
     	}
     }
 
