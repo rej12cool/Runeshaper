@@ -23,6 +23,8 @@ public class Turret : MonoBehaviour
 
 	// The player
 	private GameObject player;
+	// The number of frames since start
+	private int numFrames = 0;
 
 
     // Start is called before the first frame update
@@ -38,9 +40,16 @@ public class Turret : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
-        SeekPlayer();
+    	if (numFrames > 40)
+    	{
+        	SeekPlayer();
+    	}
+    	else
+    	{
+    		numFrames++;
+    	}
     }
 
     // Raycast to player and see if can hit

@@ -145,7 +145,7 @@ MonoBehaviour:
   target: {fileID: 0}
   focusAreaSize: {x: 2.5, y: 2}
   verticalOffset: 0
-  lookAheadDistX: 4
+  lookAheadDistX: 0
   lookSmoothTimeX: 0.2
   verticalSmoothTime: 0.2
 --- !u!114 &9061555034235335182
