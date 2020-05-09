@@ -8,7 +8,17 @@ public class Spikes : MonoBehaviour
     {
         if (other.gameObject.tag == "Player")
         {
-            other.gameObject.GetComponent<Death>().Die();
+        	StartCoroutine(ImpalePlayer(other.gameObject));
         }
+    }
+
+    IEnumerator ImpalePlayer(GameObject player)
+    {
+    	// Play sound
+    	GetComponent<AudioSource>().Play();
+
+    	yield return new WaitForSeconds(0.4f);
+
+    	player.GetComponent<Death>().Die();
     }
 }

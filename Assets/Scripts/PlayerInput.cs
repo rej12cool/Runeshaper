@@ -15,9 +15,9 @@ public class PlayerInput : MonoBehaviour
     private bool projecting = false;
     // The astral form of the player
     private GameObject astralForm;
-    // Bool used to determine if the F event has already been handled and
+    // Bool used to determine if the R event has already been handled and
     // any further pressing should be ignored
-    private bool pressingF = false;
+    private bool pressingR = false;
 
     void Start()
     {
@@ -37,12 +37,6 @@ public class PlayerInput : MonoBehaviour
         animator.SetBool("move_left", false);
         animator.SetBool("jump", false);
 
-
-        // Reset level signal
-        if (Input.GetKey("r"))
-        {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-        }
 
         // Move the player if not projecting
         if (!projecting)
@@ -68,9 +62,9 @@ public class PlayerInput : MonoBehaviour
         }
 
         // Astral project key
-        if (Input.GetKey("f") && !pressingF)
+        if (Input.GetKey("r") && !pressingR)
         {
-            pressingF = true;
+            pressingR = true;
 
             // If not currently in astral form, go into astral form
             if (!projecting)
@@ -97,9 +91,9 @@ public class PlayerInput : MonoBehaviour
                 projecting = false;
             }
         }
-        else if (!(Input.GetKey("f")))
+        else if (!(Input.GetKey("r")))
         {
-            pressingF = false;
+            pressingR = false;
         }
     }
 }

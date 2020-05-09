@@ -89,7 +89,10 @@ public class Turret : MonoBehaviour
     // Coroutine to shoot the laser and kill the player
     IEnumerator LaserHit()
     {
+    	// Show the laser
     	blast.GetComponent<SpriteRenderer>().enabled = true;
+    	// Play sound
+    	GetComponent<AudioSource>().Play();
 
     	yield return new WaitForSeconds(0.3f);
 
