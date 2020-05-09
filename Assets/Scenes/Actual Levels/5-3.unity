@@ -2178,15 +2178,31 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1006415602815208088, guid: 4bcefb4a12ba7434b9e578d19c247224,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 3c2b68649b150424191524c003d265d0,
+        type: 3}
+    - target: {fileID: 1006415602815208090, guid: 4bcefb4a12ba7434b9e578d19c247224,
+        type: 3}
+      propertyPath: m_SpriteTilingProperty.oldSize.x
+      value: 4.18
+      objectReference: {fileID: 0}
+    - target: {fileID: 1006415602815208090, guid: 4bcefb4a12ba7434b9e578d19c247224,
+        type: 3}
+      propertyPath: m_SpriteTilingProperty.oldSize.y
+      value: 9.57
+      objectReference: {fileID: 0}
     - target: {fileID: 1006415602815208095, guid: 4bcefb4a12ba7434b9e578d19c247224,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -22.91
+      value: -23.12
       objectReference: {fileID: 0}
     - target: {fileID: 1006415602815208095, guid: 4bcefb4a12ba7434b9e578d19c247224,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 3.46
+      value: 2.98
       objectReference: {fileID: 0}
     - target: {fileID: 1006415602815208095, guid: 4bcefb4a12ba7434b9e578d19c247224,
         type: 3}
@@ -2232,6 +2248,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1006415602815208095, guid: 4bcefb4a12ba7434b9e578d19c247224,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.25956002
+      objectReference: {fileID: 0}
+    - target: {fileID: 1006415602815208095, guid: 4bcefb4a12ba7434b9e578d19c247224,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.25956002
+      objectReference: {fileID: 0}
+    - target: {fileID: 1006415602815208095, guid: 4bcefb4a12ba7434b9e578d19c247224,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.721
       objectReference: {fileID: 0}
     - target: {fileID: 1006415602815208100, guid: 4bcefb4a12ba7434b9e578d19c247224,
         type: 3}
@@ -20074,6 +20105,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: RunePlacement
+      objectReference: {fileID: 0}
+    - target: {fileID: 3746699313101119695, guid: 4077f7e9c1a0945d7a52bc31fb173b2d,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4077f7e9c1a0945d7a52bc31fb173b2d, type: 3}
