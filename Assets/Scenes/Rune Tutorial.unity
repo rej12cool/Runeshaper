@@ -2591,5 +2591,20 @@ PrefabInstance:
       propertyPath: m_Name
       value: RunePlacement
       objectReference: {fileID: 0}
+    - target: {fileID: 3746699313101119731, guid: 4077f7e9c1a0945d7a52bc31fb173b2d,
+        type: 3}
+      propertyPath: airNum
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3746699313101119731, guid: 4077f7e9c1a0945d7a52bc31fb173b2d,
+        type: 3}
+      propertyPath: waterNum
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3746699313101119731, guid: 4077f7e9c1a0945d7a52bc31fb173b2d,
+        type: 3}
+      propertyPath: fireNum
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4077f7e9c1a0945d7a52bc31fb173b2d, type: 3}

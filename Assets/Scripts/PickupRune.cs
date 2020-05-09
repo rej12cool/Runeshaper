@@ -38,8 +38,25 @@ public class PickupRune : MonoBehaviour
     {
         if (other.gameObject.tag == "Player" || other.gameObject.tag == "AstralForm")
         {
-            runeCount.PickedUpRune(type);
-            Destroy(this.gameObject);
+            StartCoroutine(PickupThis());
         }
+    }
+
+    // Pickup gem, hide it, player sound, then delete
+    IEnumerator PickupThis()
+    {
+    	// Increment count
+    	runeCount.PickedUpRune(type);
+
+    	// Deactivate this gem
+    	GetComponent<SpriteRenderer>().enabled = false;
+    	GetComponent<BoxCollider2D>().enabled = false;
+
+		// Play sound
+    	GetComponent<AudioSource>().Play();
+
+    	yield return new WaitForSeconds(2f);
+
+        Destroy(this.gameObject);
     }
 }
